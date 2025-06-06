@@ -1,0 +1,9 @@
+Your Account Info
+Hello,
+
+This is your account welcome message.
+
+Make sure to store this securely.
+
+Thanks,
+Support Team

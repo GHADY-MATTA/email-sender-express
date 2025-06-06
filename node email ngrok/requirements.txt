@@ -1,0 +1,10 @@
+npm init -y
+# This creates a basic package.json file.
+npm install express nodemailer dotenv
+# That installs:
+
+# express – for the HTTP server
+
+# nodemailer – to send emails
+
+# dotenv – to securely load variables from .env
