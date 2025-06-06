@@ -1,56 +1,63 @@
-# 🔐 Secure OTP Email Sender
+<h1 align="center">🔐 Secure OTP Email Sender</h1>
 
-A lightweight, production-ready API built with **Node.js** and **Express** that sends one-time passwords (OTPs) or temporary credentials to user emails using **Gmail** and **Nodemailer**.  
-It reads a customizable email template from file, appends a dynamic OTP/password, and sends a clean, readable message to any user securely via Gmail.
+<p align="center">
+A lightweight, production-ready REST API that sends one-time passwords (OTPs) or temporary credentials to user emails using <strong>Node.js</strong>, <strong>Express</strong>, and <strong>Nodemailer</strong> over Gmail.
+</p>
+
+<p align="center">
+Reads a customizable plaintext email template, injects a secure OTP, and sends it via Gmail using App Passwords. Clean, fast, and deployable via local server, <a href="https://ngrok.com">Ngrok</a>, or IIS.
+</p>
+
+<br>
 
 ---
 
 ## ✨ Features
 
-- 🚀 **Fast API**: Single POST endpoint `/send` to trigger email
-- 💌 **Customizable Templates**: Edit your message in a `.txt` file
-- 🔐 **Secure Auth**: Uses Gmail App Password (2FA-compatible)
-- 📦 **Modular Design**: Cleanly separated logic (router / handler / mailer)
-- 🌍 **Deploy-Ready**: Works with local, Ngrok, or IISNode setup
+- ⚡ **Simple POST API** — Just call `/send` with email + OTP
+- ✏️ **Customizable Message** — Use a `.txt` template with a fixed subject + body
+- 🔐 **Secure Gmail Auth** — Uses Gmail App Passwords with 2FA enabled
+- 🧱 **Modular Codebase** — Cleanly separated into `handler`, `mailer`, `template`
+- 🌍 **Deploy Anywhere** — Works with Ngrok, localhost, or behind IISNode
 
 ---
 
-## 📁 Project Structure
+## 📁 Folder Structure
 
 ```
 secure-otp-email-sender/
 ├── server.js               # Express server entry point
-├── .env                    # Env vars for Gmail credentials
+├── .env                    # Gmail credentials and port
 ├── handlers/
-│   └── handleEmail.js      # Handles the POST route logic
+│   └── handleEmail.js      # Main logic (parse, validate, send)
 ├── services/
-│   └── mailer.js           # Sends emails via Nodemailer
+│   └── mailer.js           # Nodemailer configuration
 ├── templates/
-│   └── email_template.txt  # Plaintext email template
+│   └── email_template.txt  # Subject + Body template
 ```
 
 ---
 
-## 🚀 Quickstart
+## 🚀 Getting Started
 
-### 1. Clone the repo
+### 1. Clone the Repo
 
 ```bash
 git clone https://github.com/YOUR_USERNAME/secure-otp-email-sender.git
 cd secure-otp-email-sender
 ```
 
-### 2. Install dependencies
+### 2. Install Dependencies
 
 ```bash
 npm install
 ```
 
-### 3. Set up your Gmail credentials
+### 3. Setup Gmail App Password
 
-To use Gmail, you **must enable 2-Step Verification** and [create an App Password](https://myaccount.google.com/apppasswords).
+> You **must enable 2-Step Verification** on your Gmail and generate a **[Gmail App Password](https://myaccount.google.com/apppasswords)**.
 
-Then create a `.env` file:
+Create a `.env` file:
 
 ```env
 PORT=3000
@@ -58,14 +65,14 @@ EMAIL_USER=yourgmail@gmail.com
 EMAIL_PASS=your16digitapppassword
 ```
 
-> Never use your real Gmail password. Always use an App Password.
-
 ---
 
-## ✏️ Customize Email Template
+## 📝 Customize Your Email
 
-Edit the text inside `templates/email_template.txt`.
+Edit the content of `templates/email_template.txt`.  
+The first line is used as the subject, the rest is the message body.
 
+**Example:**
 ```
 Your OTP Code
 Hello,
@@ -78,31 +85,25 @@ Thanks,
 SecureApp Team
 ```
 
-The OTP will be automatically added to the end of the message.
+➡️ The OTP will be appended to the message body automatically.
 
 ---
 
-## 🧪 API Usage
+## 🔁 API Endpoint
 
-### Endpoint
+### 📬 POST `/send`
 
-```
-POST /send
-```
+| Field     | Type     | Required | Description              |
+|-----------|----------|----------|--------------------------|
+| `email`   | `string` | ✅        | The recipient's email    |
+| `password`| `string` | ✅        | OTP or password to send  |
 
-### Full URL (if using ngrok)
-
-```
-https://your-ngrok-subdomain.ngrok.io/send
-```
-
-### Request Headers
+**Example Request:**
 
 ```http
+POST https://your-ngrok-subdomain.ngrok.io/send
 Content-Type: application/json
 ```
-
-### Request Body
 
 ```json
 {
@@ -113,7 +114,7 @@ Content-Type: application/json
 
 ---
 
-## 📧 Sample Output (Email)
+## 📧 Email Output
 
 **Subject:**
 ```
@@ -136,45 +137,48 @@ OTP Code: 123456
 
 ---
 
-## 🌐 Run with Ngrok (optional)
-
-Expose your local server to the internet:
+## 🌍 Expose Locally with Ngrok
 
 ```bash
 npx ngrok http 3000
 ```
 
-Copy the HTTPS URL and use it in Postman or your frontend.
+Use the generated HTTPS link in Postman or your frontend.
 
 ---
 
 ## 🧠 Tech Stack
 
 - [Node.js](https://nodejs.org/)
-- [Express.js](https://expressjs.com/)
+- [Express](https://expressjs.com/)
 - [Nodemailer](https://nodemailer.com/)
 - [dotenv](https://www.npmjs.com/package/dotenv)
-- [Ngrok](https://ngrok.com/) (optional)
+- [Ngrok](https://ngrok.com/)
 
 ---
 
 ## 📌 Best Practices
 
-- Use `.env` to keep credentials out of code
-- Add `.env` to `.gitignore` if using version control
-- Never hardcode email addresses or passwords in source files
-- Make sure to use Gmail App Passwords only
+- ✅ Use `.env` to store credentials securely
+- ✅ Add `.env` to `.gitignore`
+- ❌ Never hardcode sensitive data
+- ✅ Use Gmail App Passwords (not your real password)
+- ✅ Keep template text editable for easy reuse
 
 ---
 
-## 📜 License
+## 🪪 License
 
-MIT License – free for personal and commercial use.
+MIT License — free for personal and commercial use.
 
 ---
 
 ## 🙋‍♂️ Author
 
-Made by [Your Name] — built for internal use, testing flows, and teaching purposes.  
-Pull requests, issues, and forks welcome.
+**[Ghady Matta](https://www.linkedin.com/in/ghady-matta-a92a3b28b/)**  
+IoT Developer | IT Manager | Full-Stack Engineer
+
+> Built for internal tools, IoT dashboards, and secure email OTP systems.
+
+---
 
